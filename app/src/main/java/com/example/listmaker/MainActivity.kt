@@ -21,9 +21,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        val lists = listDataManager.readLists()
         todoListRecyclerView = findViewById(R.id.lists_recyclerview)
         todoListRecyclerView.layoutManager = LinearLayoutManager(this)
-        todoListRecyclerView.adapter = TodoListAdapter()
+        todoListRecyclerView.adapter = TodoListAdapter(lists)
 
         fab.setOnClickListener { _ ->
             showCreateTodoListDialog()
@@ -61,7 +62,10 @@ class MainActivity : AppCompatActivity() {
         myDialog.setPositiveButton(positiveButtonTitle) {
             dialog, _ ->
                 val adapter = todoListRecyclerView.adapter as TodoListAdapter
-                adapter.addNewItem(todoTitleEditText.text.toString())
+                val list = TaskList(todoTitleEditText.text.toString())
+                listDataManager.saveList(list)
+                adapter.addList(list)
+
                 dialog.dismiss()
         }
         myDialog.create().show()
