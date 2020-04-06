@@ -6,8 +6,16 @@ import androidx.recyclerview.widget.RecyclerView
 
 class TodoListAdapter : RecyclerView.Adapter<TodoListViewHolder>(){
 
-    private val todoLists = arrayOf("Android Development", "House Work", "Errands")
+    private var todoLists = mutableListOf("Android Development", "House Work", "Errands", "Shopping")
 
+    fun addNewItem(listName: String = "") {
+        if (listName.isEmpty()) {
+            todoLists.add("Todo List " + (todoLists.size + 1))
+        } else {
+            todoLists.add(listName)
+        }
+        notifyDataSetChanged()
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoListViewHolder {
@@ -21,6 +29,9 @@ class TodoListAdapter : RecyclerView.Adapter<TodoListViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: TodoListViewHolder, position: Int) {
-        TODO("Not yet implemented")
+
+        holder.listPositionTextView.text = (position + 1).toString()
+        holder.listTitleTextView.text = todoLists[position]
+
     }
 }
