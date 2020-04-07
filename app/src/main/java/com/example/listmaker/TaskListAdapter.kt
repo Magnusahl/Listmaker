@@ -1,11 +1,14 @@
 package com.example.listmaker
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class TaskListAdapter(var list: TaskList) : RecyclerView.Adapter<TaskListViewHolder> {
+class TaskListAdapter(var list: TaskList) : RecyclerView.Adapter<TaskListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskListViewHolder {
-        TODO("Not yet implemented")
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.task_view_holder, parent, false)
+        return TaskListViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -13,6 +16,6 @@ class TaskListAdapter(var list: TaskList) : RecyclerView.Adapter<TaskListViewHol
     }
 
     override fun onBindViewHolder(holder: TaskListViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.taskTextView?.text = list.tasks[position]
     }
 }
